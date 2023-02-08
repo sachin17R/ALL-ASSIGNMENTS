@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+         * {
+            margin: 0%;
+            padding: 0%;
+            box-sizing: border-box;
+        }
+
+        body {
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1rem;
+            grid-auto-rows: minmax(200px);
+        }
+
+        div {
+            padding: 2rem 2rem;
+            border: 2px solid black;
+            width: 90%;
+        }
+
+        h2 {
+            border-bottom: 1px solid black;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        #favBookContainer {
+            grid-auto-rows: minmax(200px, auto);
+        }
+    </style>
+    <script>
+        const favBooks = [];
+
+function getInput(){
+    const favBook = document.getElementById("favBook").value;
+    favBooks.push(favBook);
+    document.getElementById("favBook").value ="";
+    return favBook;
+}
+function getData(){
+    const favBook = getInput();
+    let ol = document.getElementById("favBooks");
+    const value = "<li>" + favBook + "</li>";
+    ol.innerHTML += value;
+    //console.log(favBooks);
+}
+    </script>
+</head>
+<body>
+    <hr><hr>
+    <div id="favBookContainer">
+        <h2>Fav books</h2>
+        <Label>Enter your Favourate Book</Label>
+        <input type="text" id="favBook">
+        <ol id="favBooks"></ol>
+        <button onclick="getData()">Add and Display</button>
+    </div>
+</body>
+</html>

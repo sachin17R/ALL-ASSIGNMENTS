@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script src="./jquerylibrary.min.js"></script>
+<script src="./product.js"></script>
+<script>
+
+    const data = instance.getAllProducts()
+    function createRow(prod) {
+        let row = document.createElement("tr")
+        row.innerHTML = `<td> ${prod.id} </td>
+        <td> ${prod.name} </td>
+        <td> ${prod.details} </td>
+        <td> ${prod.price} </td>`
+        return row;
+    }
+    function populate() {
+        const table = document.querySelector("#tblRecords");
+        const firstRow = document.querySelector("#theading");
+        table.innerHTML = "";
+        table.appendChild(firstRow);
+        for (const emp of data) {
+            let row = createRow(emp);
+            table.appendChild(row);
+        }
+    }
+    window.addEventListener("load", function () {
+        populate();
+    })
+    function onEdit() {
+        const id = prompt("Enter the Id of the Employee to Edit");
+        try {
+            const foundRec = instance.getProducts(id)
+            document.getElementById("txtOldId").value = foundRec.id;
+            document.getElementById("txtOldName").value = foundRec.name;
+            document.getElementById("txtOldDetails").value = foundRec.details;
+            document.getElementById("txtOldPrice").value = foundRec.price;
+        } catch (ex) {
+            alert(ex);
+        }
+    }
+    function onSearch() {
+        const id = document.getElementById("txtSearch").value
+        try {
+            const foundRec = instance.getProducts(id)
+            const name = (document.getElementById("txtOldName").value = foundRec.name);
+            const details = (document.getElementById("txtOldDetails").value = foundRec.details);
+            const price = (document.getElementById("txtOldPrice").value = foundRec.price);
+            document.getElementById("results").innerText = `This product containing the id :${id}, name is ${name}, and ${details}. The price of the product is ${price}`
+        }
+        catch (ex) {
+            alert(ex);
+        }
+    }
+
+    function onUpdate() {
+        const id = parseInt(document.getElementById("txtOldId").value);
+        const name = document.getElementById("txtOldName").value;
+        const details = document.getElementById("txtOldDetails").value;
+        const price = parseFloat(document.getElementById("txtOldPrice").value);
+
+        const prod = new Product(id, name, details, price);
+        try {
+            instance.updateProducts(prod);
+            populate();
+        } catch (error) {
+            alert(error)
+        }
+    }
+
+    function onAdd() {
+        const id = parseInt(document.getElementById("txtId").value);
+        const name = document.getElementById("txtName").value;
+        const details = document.getElementById("txtDetails").value;
+        const price = parseFloat(document.getElementById("txtPrice").value);
+        localStorage.setItem(id, name)
+        const prod = new Product(id, name, details, price);
+        try {
+            instance.addProducts(prod);
+            populate();
+        } catch (error) {
+            alert(error)
+        }
+    }
+
+
+</script>
+
+<body>
+    <h1>Product Manager Application</h1>
+    <hr>
+    <nav>
+        <a href="#">Display All Products</a>
+        <a href="#">Add Products</a>
+        <a href="#" onclick="onEdit()">Update Products</a>
+    </nav>
+    <div>
+        <h4>
+            <p>
+                <input type="text" id="txtSearch" placeholder="Enter the Id">
+                <button onclick="onSearch()">Search</button>
+            </p>
+        </h4>
+        <p id="results"></p>
+    </div>
+    <div>
+        <h2>List of Product</h2>
+        <hr>
+        <table border="1" id="tblRecords">
+            <tr id="theading">
+                <th>Product Id</th>
+                <th>Products</th>
+                <th>Details</th>
+                <th>Price</th>
+            </tr>
+        </table>
+    </div>
+    <div>
+        <h2>Add Products</h2>
+        <hr>
+        <p>Product Id : <input type="number" id="txtId"></p>
+        <p>Product Name : <input type="text" id="txtName"></p>
+        <p>Product Details : <input type="text" id="txtDetails"> </p>
+        <p>Product Details : <input type="text" id="txtPrice"> </p>
+        <button onclick="onAdd()">Add Product</button>
+    </div>
+    <div>
+        <h2>Update Products</h2>
+        <hr>
+        <p>Product Id : <input type="number" readonly id="txtOldId"></p>
+        <p>Product Name : <input type="text" id="txtOldName"></p>
+        <p>Product Details : <input type="text" id="txtOldDetails"> </p>
+        <p>Product Price : <input type="text" id="txtOldPrice"> </p>
+        <button onclick="onUpdate()">Update Product</button>
+    </div>
+</body>
+
+</html>

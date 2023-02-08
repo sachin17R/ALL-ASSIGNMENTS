@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Temperature convertion</title>
+    <Style>
+        * {
+            margin: 0%;
+            padding: 0%;
+            box-sizing: border-box;
+        }
+
+        body {
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1rem;
+            grid-auto-rows: minmax(200px);
+        }
+
+        div {
+            padding: 2rem 2rem;
+            border: 2px solid black;
+            width: 90%;
+        }
+
+        h2 {
+            border-bottom: 1px solid black;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        #favBookContainer {
+            grid-auto-rows: minmax(200px, auto);
+        }
+    </Style>
+    <script>
+        function tempConvertion() {
+            let celsius = prompt("Enter the Temperature in celsius");
+            tempConvertor(celsius);
+        }
+
+        function tempConvertor(celsius) {
+            let result = (celsius * 1.8) + 32
+            alert(celsius + " C is equals to " + result + " F");
+        }
+    </script>
+</head>
+
+<body style="text-align: center;">
+    <hr>
+    <hr>
+
+    <div>
+        <h2>Temperature from Celsius to Farenheit</h2>
+        <button onclick="tempConvertion()">Temperature Convertor</button>
+    </div>
+
+    
+
+</body>
+
+</html>

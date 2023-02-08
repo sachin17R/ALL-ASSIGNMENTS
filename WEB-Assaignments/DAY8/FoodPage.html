@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./Home.css">
+    <script src="./FoodPage.js"></script>
+    <script src="./jquerylibrary.min.js"></script>
+    <script>
+        $().ready(Start)
+
+        function Start() {
+            $(".buynow").click(fetching)
+            $("#cartdet").click(repotable)
+            $("#report").click(repshow)
+            $("#homeid").click(showhome)
+            // $(".buynow").click(function(){
+            //     const quantity = $(this).parents("pre").find("select").val();
+            //     alert(quantity)
+            // })
+        }
+
+        function fetching() {
+            const type = $(this).parents("pre").find("h1").text();
+            const hotel = $(this).parents("pre").find("h2").text();
+            const amount = parseInt($(this).parents("pre").find("button:eq(0)").text());
+            const qty = parseInt($(this).parents("pre").find("select").val());
+            // console.log(amount,qty)
+
+            obj.addfood(new Fooddef(type, hotel,amount, qty, (qty*amount)))
+
+            $("#pDisplay").show(2000)
+           $(this).parents("pre").find("p").val("<b>added successfully</b>") 
+           $("#pDisplay").hide(1000)
+            // console.table(obj.foodArray);
+        }
+        function repotable() {
+            const data = obj.getfood();
+            populate(data)
+
+        }
+        function populate(data) {
+            $("#table").find("tr:gt(0)").remove();
+            $.each(data, (index, item) => {
+                const row = `<tr>
+                    <td>${item.id}</td>
+                    <td>${item.type}</td>
+                    <td>${item.hotel}</td>
+                    <td>${item.sprice}</td>
+                    <td>${item.quantity}</td>
+                    <td>${item.totamt}</td>
+                    </tr>`
+
+                $("#repotableee").append(row);
+            })
+        }
+        function repshow() {
+            $("#homeDiv").hide()
+            $("#repotable").show(100);
+
+        }
+        function showhome() {
+            $("#repotable").hide();
+            $("#homeDiv").show(1000)
+        }
+    </script>
+</head>
+
+<body>
+    <div>
+        <center>
+            <h1>Welcome to Starmark Food Application</h1>
+        </center>
+        <hr>
+    </div>
+    <nav id="navii">
+        <div id="home">HOME</div>
+        <div id="report"><button id="cartdet">Cart Details</button></div>
+    </nav>  <center></center>
+    <hr>
+    <div id="homeDiv">
+        <div class="image"><img src="./content/biriyani.jpg" alt="">
+            <pre>
+                <h1 id="type">Hot Chicken Biriyani!!!!</h1><h2 id="hotel">Hotel Mayura</h2>                 
+                <p>As they are located in a favourable neighbourhood, exactly at No.16, Opposite KSRTC Bus Stand, Subhash Nagar, Tank Bund Road, Kempegowda Road-560009</p>           
+                 Price: <button id="amount">250</button>      Quantity: <select name="" id="qty"><option>1</option>
+                                                                                     <option>2</option>
+                                                                                      <option>3</option>
+                                                                                         <option>4</option></select>       <button class="buynow">Buy Now</button>          
+                                                                                
+
+             </pre>
+        </div>
+        <div class="image"><img src="./content/downlddoad.jpg" alt="">
+            <pre>
+                <h1 id="type">Gulab jamoon!!!!</h1><h2 id="hotel">Hotel Sagar</h2>
+                <p>mysore.Subhash Nagar, Tank Bund Road, Kempegowda Road-560009</p>                         
+                 Price: <button id="amount">150</button>      Quantity: <select><option>1</option>
+                                                                                     <option>2</option>
+                                                                                      <option>3</option>
+                                                                                         <option>4</option></select>       <button class="buynow">Buy Now</button>
+                                                                                         
+
+             </pre>
+        </div>
+        <div class="image"><img src="./content/download.jpg" alt="">
+            <pre>
+                <h1 id="type">veggy Fried Rice!!!!</h1><h2 id="hotel">Hotel Kadamba</h2>
+                <p>Ramanagara Subhash Nagar, Tank Bund Road, Kempegowda Road-560009</p>           
+                 Price: <button id="amount">120</button>      Quantity: <select name="" id="qty"><option>1</option>
+                                                                                     <option>2</option>
+                                                                                      <option>3</option>
+                                                                                         <option>4</option></select>     <button class="buynow">Buy Now</button>
+   
+                                                                               
+             </pre>
+        </div>
+        <div class="image"><img src="./content/downlodad.jpg" alt="">
+            <pre>
+                <h1 id="type">Crispy Veg Biriyani!!!!</h1><h2 id="hotel">Shivalli Restorant</h2>
+                <p>Chikkaballapur No.16, Opposite KSRTC Bus Stand, Subhash Nagar, Tank Bund Road, Kempegowda Road-560009</p>           
+                 Price: <button id="amount">135</button>      Quantity: <select name="" id="qty"><option>1</option>
+                                                                                     <option>2</option>
+                                                                                      <option>3</option>
+                                                                                         <option>4</option></select>    <button class="buynow">Buy Now</button>   
+                                                                                
+
+             </pre>
+        </div>
+        <div class="image"><img src="./content/downloddad.jpg" alt="">
+            <pre>
+                <h1 id="type">Khaju Burfii !!!!</h1><h2 id="hotel">Asha Sweets</h2>
+                <p>Kengeri Opposite KSRTC Bus Stand, Subhash Nagar, Tank Bund Road, Kempegowda Road-560009</p>           
+                 Price: <button id="amount">400</button>      Quantity: <select name="" id="qty"><option>1</option>
+                                                                                     <option>2</option>
+                                                                                      <option>3</option>
+                                                                                         <option>4</option></select>       <button class="buynow">Buy Now</button>
+                                                                                
+
+             </pre>
+        </div>
+        <div class="image"><img src="./content/images.jpg" alt="">
+            <pre>
+                <h1 id="type">Spicy Egg Biriyani!!!!</h1><h2 id="hotel">Hotel Karunadu</h2>
+                <p>Nanjangud KSRTC Bus Stand, Subhash Nagar, Tank Bund Road, Kempegowda Road-560009</p>           
+                 Price: <button id="amount">120</button>      Quantity: <select name="" id="qty"><option>1</option>
+                                                                                     <option>2</option>
+                                                                                      <option>3</option>
+                                                                                         <option>4</option></select>     <button class="buynow">Buy Now</button>   
+                                                                                
+
+             </pre>
+        </div>
+        <div class="image"><img src="./content/imageds.jpg" alt="">
+            <pre>
+                <h1 id="type">Veg Salad !!!!</h1><h2 id="hotel">Tibbet Kitchen</h2>
+                <p>Rajajinagar exactly at No.16, Opposite KSRTC Bus Stand, Subhash Nagar, Tank Bund Road, Kempegowda Road-560009</p>           
+                 Price: <button id="amount">150</button>      Quantity: <select name="" id="qty"><option>1</option>
+                                                                                     <option>2</option>
+                                                                                      <option>3</option>
+                                                                                      <option>4</option></select>       <button class="buynow">Buy Now</button>
+                                                                                      
+
+             </pre>
+        </div>
+        <div class="image"><img src="./content/imageass.jpg" alt="">
+            <pre>
+                <h1 id="type">Hot Jalebi !!!!</h1><h2 id="hotel">Mahalakshmi Sweets</h2>
+                <p>Vijaynagar neighbourhood, exactly at No.16, Opposite KSRTC Bus Stand, Subhash Nagar, Tank Bund Road, Kempegowda Road-560009</p>           
+                 Price: <button id="amount">170</button>      Quantity: <select name="" id="qty"><option>1</option>
+                                                                                     <option>2</option>
+                                                                                      <option>3</option>
+                                                                                         <option>4</option></select>    <button class="buynow">Buy Now</button>   
+                                                                                
+
+             </pre>
+        </div>
+    </div>
+  
+    <center>
+        <div id="repotable">
+            <h1>Details of Order</h1>
+            <button id="homeid">home</button><br><hr>
+            <table border="2px" cellpadding="5px" cellspacing="5px" id="repotableee">
+                <tr>
+                    <th>Sl no:</th>
+                    <th>Type</th>
+                    <th>Hotel</th>
+                    <th>Amount/piece</th>
+                    <th>Quantity</th>
+                    <th>Total Amount</th>
+                </tr>
+            </table>
+        </div>
+    </center>
+</body>
+
+</html>

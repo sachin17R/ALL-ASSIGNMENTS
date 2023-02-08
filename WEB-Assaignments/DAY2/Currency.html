@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <Style>
+        * {
+            margin: 0%;
+            padding: 5px;
+            box-sizing: border-box;
+        }
+
+        body {
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1rem;
+            grid-auto-rows: minmax(200px);
+        }
+
+        div {
+            padding: 2rem 2rem;
+            border: 2px solid black;
+            width: 50%;
+        }
+
+        h2 {
+            border-bottom: 1px solid rgb(37, 22, 175);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        #favBookContainer {
+            grid-auto-rows: minmax(200px, auto);
+        }
+    </Style>
+    <script>
+        function calculateCurrenty(){
+    const countryFrom = document.getElementById("countryFrom").value;
+    const countryTo = document.getElementById("countryTo").value;
+    const currency = document.getElementById("currency").value;
+    let result = currencyCalculator(countryFrom,countryTo,currency);
+    if (result != undefined) {
+        if (countryTo == "Russia") {
+            result += " Ruble";
+        }
+        else {
+            result += " Euro";
+        }
+        document.getElementById("result").innerText = result;
+    }
+}
+
+function  currencyCalculator(countryFrom,countryTo,currency){
+    if(countryFrom == "default" || countryTo == "default"){
+        alert("Please select a country");
+        return;
+    }
+    else{
+        switch(countryFrom){
+            case "India": if(countryTo == "Russia"){
+                            return currency*0.76;
+                        }
+                        else{
+                            return currency*0.011;
+                        }
+            case "USA": if(countryTo == "Russia"){
+                             return currency*63.12;
+                        }
+                        else{
+                            return currency*0.95;
+                        }
+        }
+    }
+}
+    </script>
+</head>
+<body style="text-align: center;">
+    <div>
+        <h2>Currency convertor</h2>
+        <label for="countryFrom">From</label>
+        <select name="countryFrom" id="countryFrom">
+            <option value="">Select country</option>
+            <option value="India">India</option>
+            <option value="USA">USA</option>
+        </select>
+
+        <label for="countryTo">To</label>
+        <select name="countryTo" id="countryTo">
+            <option value="default">Select country</option>
+            <option value="Russia">Russia</option>
+            <option value="France">France</option>
+        </select>
+        <br>
+        <label for="currency">Enter Currency</label>
+        <input type="number" id="currency">
+        <button onclick="calculateCurrenty()">Convert</button>
+        <p id="result"></p>
+    </div>
+</body>
+</html>

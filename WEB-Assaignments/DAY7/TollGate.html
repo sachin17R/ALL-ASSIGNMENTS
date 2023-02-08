@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>toll</title>
+    <link rel="stylesheet" href="./TollGate.css">
+    <script src="./jquerylibrary.min.js"></script>
+    <script src="./TollGate.js"></script>
+    <script>
+        const vehicle = new Map([
+            ["CAR", 100],
+            ["BUS", 200],
+            ["TRUCK", 300],
+            ["TEMPO", 250],
+        ])
+        // const CAR = 100;
+        // const BUS = 200;
+        // const TRUCK = 300;
+        // const TEMPO = 250;
+        $().ready(tollStart);
+        function tollStart() {
+
+            $("#repotable").hide();
+            $("#addDiv").hide();
+            $("#vehType").change(vehtypf);
+            $("#onSave").click(saveChange);
+            $("#oncancel").click(clearfiels)
+            $("#repobtn").click(showReport)
+            $("#addVeh").click(addingdetail)
+            $("#addSave").click(addingdata)
+        }
+        function vehtypf() {
+            $("div#addDiv").hide();
+            $("#repotable").hide();
+            const type = $("#vehType").val();
+            $("#vehType1").val(type)
+            // switch (type) {
+            //     case "CAR": $("#defprice").val(vehicle.get("CAR"));
+            //         break;
+            //     case "BUS": $("#defprice").val(vehicle.get("BUS"));
+            //         break;
+            //     case "TRUCK": $("#defprice").val(vehicle.get("TRUCK"));
+            //         break;
+            //     case "TEMPO": $("#defprice").val(vehicle.get("TEMPO"));
+            //         break;
+            //     default: 
+            // }
+                displayiuiids(type);
+
+
+            $("#pDisplay").hide();
+        }
+        function displayiuiids(type){
+            const data = vehicle.get(type)
+            console.log(data)
+            $("#defprice").val(data)
+
+        }
+        function saveChange() {
+            const vehiType = $("#vehType1").val();
+            const vehiNum = ($("#vehNum1").val()).toUpperCase();
+            const vehiAmt = $("#defprice").val();
+            const vehiDate = Datemodifier(new Date($("#vehDate1").val()));
+            obj.addDetails(new vehTypeEntry(vehiType, vehiNum, vehiAmt, vehiDate))
+            parashow();
+            // console.log(vehiType,vehiAmt,vehiNum,vehiDate)
+            // console.table(obj.vehDetails)
+            clearfiels()
+        }
+        function parashow() {
+            $("#pDisplay").show();
+            document.querySelector("#pDisplay").innerHTML = "<b>data added successfully </b>";
+        }
+        function clearfiels() {
+            $("#vehType1").val("");
+            $("#vehNum1").val("");
+            $("#defprice").val("");
+            $("#vehDate1").val("");
+
+        }
+        function showReport() {
+            $("#pDisplay").hide();
+            $("div#addDiv").hide();
+            $("#repotable").show(1000);
+            const data1 = obj.getDetails();
+            console.table(data1);
+            populate(data1)
+        }
+
+        function populate(data) {
+            $("#repotable").find("tr:gt(0)").remove();
+            $.each(data, (index, item) => {
+                const row = `<tr>
+                    <td>${item.vehDate}</td>
+                    <td>${item.vehType}</td>
+                    <td>${item.vehNum}</td>
+                    <td>${item.vehAmt}</td>
+                    </tr>`
+                $("table:eq(1)").append(row);
+            })
+        }
+        function Datemodifier(time) {
+            // return `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`
+            const yr = time.getFullYear();
+            const month = time.getMonth();
+            const date = time.getDate();
+            return `${date}-${month}-${yr}`;
+        }
+        function addingdetail(){
+            $("#repotable").hide();
+            $("div#addDiv").show();
+
+        }
+
+        function addingdata() {
+            const addv1 = ($("#typeVeh").val()).toUpperCase();
+            const addam1 = $("#typeNum").val();
+            vehicle.set(addv1, addam1);
+            console.log(addv1, addam1)
+            console.log(vehicle.get(addv1))
+            $("#vehType").append(`<option>${addv1}</option>`)
+            $("#typeVeh").val('')
+            $("#typeNum").val('')
+
+        }
+        // function searchVeh(key){
+        //     const data = vehicle.get("key");
+        //     console.log(data)
+        // }
+    </script>
+</head>
+
+<body>
+    <center>
+        <div id="firstDiv">
+            <h1>NELAMANGALA TOLL</h1>
+        </div>
+        <br><br>
+        <span>
+            <div id="typeDiv">VEHICLE ENTRY UNIT</div><br>
+            <nav class="line">
+                Select Type: <select name="" id="vehType">
+                    <option value="CAR">CAR</option>
+                    <option value="BUS">BUS</option>
+                    <option value="TRUCK">TRUCK</option>
+                    <option value="TEMPO">TEMPO</option>
+
+                </select> <button id="repobtn" type="submit">view report</button>
+                <button id="addVeh">add vehicle</button>
+                <br><br>
+
+            </nav><br>
+            <div id="tableDiv">
+                <table>
+                    <tr>
+                        <td><label for="">vehicle Type :</label></td>
+                        <td><input disabled id="vehType1"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="">default price :</label></td>
+                        <td><input disabled id="defprice"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="">vehicle number :</label></td>
+                        <td><input type="text" id="vehNum1" style="text-transform: uppercase;"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="">date :</label></td>
+                        <td><input type="date" id="vehDate1"></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><button id="onSave">save</button> <button id="oncancel">cancel</button> </td>
+                    </tr>
+                </table>
+                <p id="pDisplay"></p>
+            </div>
+        </span><hr>
+
+        <div>
+            <table border="2px" cellpadding="5px" cellspacing="5px" id="repotable">
+                <tr>
+                    <th>date of entry</th>
+                    <th>vehicle type</th>
+                    <th>vehicle number</th>
+                    <th>amount</th>
+                </tr>
+            </table>
+        </div>
+        <div id="addDiv">
+            <table>
+                <tr>
+                    <td>vehicle type:</td>
+                    <td><input type="text" id="typeVeh" style="text-transform: uppercase;"></td>
+                </tr>
+                <tr>
+                    <td>Default amount: </td>
+                    <td><input type="number" id="typeNum"></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><button id="addSave">add vehicle</button> <button>cancel</button></td>
+
+                </tr>
+            </table>
+        </div>
+
+    </center>
+
+</body>
+
+</html>

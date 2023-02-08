@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- <script src="./welcomePage.js"></script> -->
+    <!-- <link rel="stylesheet" href="./welcomePage.css"> -->
+    <script src="./jquerylibrary.min.js"></script>
+    <script>
+        $().ready(startwelcome);
+        function startwelcome() {
+            $("#regDiv").hide();
+            $("#Regid").click(regesterForm);
+            $("#logId").click(loginForm)
+            $("#regButton").click(saveRegister)
+            $("#regCancel").click(cancelReg)
+            $("#saveLogin").click(loginpage)
+        }
+        function loginForm() {
+            $("#regDiv").hide();
+            $("#logDiv").show();
+        }
+        function regesterForm() {
+            $("#logDiv").hide();
+            $("#regDiv").show();
+        }
+        function saveRegister() {
+            const phone = $("#regPhone").val();
+            const password = $("#regPass").val();
+
+            localStorage.setItem(phone, password);
+            $("#pDisplay").show()
+            document.querySelector("#pDisplay").innerHTML = "<b> registered successfully </b>"
+            $("#pDisplay").slideUp(3000)
+            $("#regPhone").val('');
+            $("#regPass").val('');
+        }
+        function cancelReg() {
+            $("#regPhone").val('');
+            $("#regPass").val('');
+            $("#pDisplay").show()
+            document.querySelector("#pDisplay").innerHTML = "<b> registration cancelled</b>"
+            $("#pDisplay").slideUp(3000)
+        }
+        function loginpage() {
+            const phone = $("#logPhone").val();
+            const password = $("#logPass").val();
+
+            // console.log(phone)
+            // console.log(localStorage.getItem(phone))
+            // console.log(localStorage.getItem(`${phone}`))
+
+            if(password == localStorage.getItem(phone)) {
+                $("#logPhone").val("");
+                $("#logPass").val("");
+                $("#pDisplay").show()
+                document.querySelector("#pDisplay").innerHTML = "<b> login successfull </b>"
+                $("#pDisplay").slideUp(3000)
+                window.location.href="FoodPage.html";
+            }
+            else {
+                $("#logPhone").val("");
+                $("#logPass").val("");
+                $("#pDisplay").show()
+                document.querySelector("#pDisplay").innerHTML = "<b> password is wrong!!!!!   New user? pleae register</b>"
+                $("#pDisplay").slideUp(3000)
+            }
+
+            //    const phone1 = localStorage.getItem(phone);
+            //    console.log(localStorage.getItem(phone))
+        }
+
+
+    </script>
+
+</head>
+
+<body>
+    <center>
+        <div>
+            <h1>WELCOME TO STARMARK</h1>
+        </div>
+        <hr><br><br><br>
+        <div id="logDiv">
+            <h2>login page</h2>
+            <table>
+                <tr>
+                    <td>Phone or Email</td>
+                    <td><input type="text" id="logPhone"></td>
+                </tr>
+                <tr>
+                    <td>Password</td>
+                    <td><input type="password" id="logPass"></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><button id="saveLogin">Login</button></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>New User? : <a href="#" id="Regid">Register</a></td>
+                </tr>
+            </table>
+        </div>
+        <div id="regDiv">
+            <h2>register page</h2>
+            <table>
+                <tr>
+                    <td>Phone or Email</td>
+                    <td><input type="text" id="regPhone"></td>
+                </tr>
+                <tr>
+                    <td>Password</td>
+                    <td><input type="password" id="regPass"></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><button id="regButton">Register</button> <button id="regCancel">Cancel</button></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>Already User? : <a href="#" id="logId">Login</a></td>
+                </tr>
+            </table>
+        </div>
+        <p id="pDisplay"></p>
+    </center>
+</body>
+
+</html>

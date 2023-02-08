@@ -1,0 +1,25 @@
+body{
+    margin:1rem 2rem;
+    background-color: aquamarine;
+}
+#navbar{    
+    display: inline-flex;
+    padding-left: 0;
+    list-style-type: none;
+    gap:1rem;
+}
+
+section{
+    padding: 20px;
+    margin-bottom: -50px;
+}
+.Mycode{
+    background-color: rgb(209, 240, 240);
+}
+.Sircode{
+    background-color: rgb(139, 233, 197);
+}
+
+table{
+    border-collapse: collapse;
+}
